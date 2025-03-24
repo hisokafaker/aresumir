@@ -1,0 +1,431 @@
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Aresumir</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  </head>
+  <body class="bg-gray-900 text-white">
+    <!-- Encabezado (Header) -->
+    <header class="bg-gray-800 p-4 flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <img
+          alt="Logo del sitio con un personaje a la derecha"
+          class="h-20"
+          height="80"
+          src="img/logo.jpg"
+          width="80"
+        />
+        <h1 class="text-2xl font-bold">Aresumir</h1>
+        <i class="fab fa-youtube text-red-500 text-2xl"> </i>
+      </div>
+      <nav class="flex space-x-4">
+        <a class="text-white" href="#"> Inicio </a>
+        <a class="text-white" href="#"> Biblioteca   </a>
+        <a class="text-white" href="#"> Categorías </a>
+        <a class="text-white" href="#"> Contacto </a>
+      </nav>
+      <div class="flex items-center space-x-2">
+
+
+        <div id="login-container">
+          <img id="login" src="img/login.gif" type="button" style="max-width: 50px; max-height: 50px;" alt="" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+      </div>
+
+
+      <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Inicia tu Aresumir</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body ">
+              
+
+              <form>
+                <div class="mb-3">
+                    <label for="correo" class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="correo" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">Tu correo no será mostrado públicamente.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="pass" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="pass">
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="recordar">
+                    <label class="form-check-label" for="recordar">Recordar sesión</label>
+                </div>
+                <button type="button" id="iniciar" class="btn btn-outline-light">Iniciar</button>
+            </form>
+
+
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-outline-light" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Registrarme</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Unete Aresumir</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              
+              <div class="input-group mb-3">
+                <span class="input-group-text">Nombre de Usuario</span>
+                <input id="usuario" type="text" class="form-control">
+            </div>
+            
+            <div class="input-group mb-3">
+                <span class="input-group-text">Correo Electrónico</span>
+                <input id="correo" type="email" class="form-control">
+            </div>
+            
+            <div class="input-group mb-3">
+                <span class="input-group-text">Contraseña</span>
+                <input id="pass" type="password" class="form-control">
+            </div>
+            
+            <button id="registrar" type="button" class="btn btn-outline-light">Registrar</button>
+
+
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-outline-light" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Ya tengo cuenta</button>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+      
+        
+        <br /><br />
+      </div>
+    </header>
+    <!-- Sección Principal -->
+    <main class="p-4">
+      <section class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+        <div class="bg-blue-900 text-white p-4 rounded flex-1">
+          <h2 class="text-xl font-bold">Nuevo capítulo disponible.!</h2>
+          <h3 id="title" class="text-lg font-bold">Nuevo capítulo disponible.</h3>
+          <p id="description" class="mt-2">
+            Al borde de la muerte, el guerrero más fuerte de la humanidad, Ang, reencarna misteriosamente sesenta años en el futuro con la fuerza del "Demonio más Fuerte", una espada de doble filo peligrosa.
+          </p>
+          <div class="flex space-x-2 mt-4">
+            <a id="viewButton" href="#" target="_blank" class="bg-blue-500 p-2 rounded inline-block text-white">Ver</a>
+            <button class="bg-blue-500 p-2 rounded">Leer</button>
+          </div>
+        </div>
+        <div class="flex-1">
+          <iframe 
+            id="videoFrame"
+            class="rounded w-full h-56"
+            src="https://youtu.be/nbpWMh2eGok?si=erLqEtoy0RTlD97P"
+            frameborder="0"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </section>
+  
+      <!-- Formulario para actualizar información -->
+      <div id="administrador" class="mt-6 flex justify-center">
+        <div class="form-container">
+          <form id="updateForm" class="form">
+            <div class="form-group">
+              <label for="newTitle">Título</label>
+              <input type="text" id="newTitle" placeholder="Ingrese el título">
+            </div>
+            <div class="form-group">
+              <label for="newDescription">Descripción</label>
+              <textarea id="newDescription" placeholder="Ingrese la descripción"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="videoUrl">Enlace de YouTube</label>
+              <input type="text" id="videoUrl" placeholder="Ingrese el enlace de YouTube">
+            </div>
+            <button type="submit" class="form-submit-btn">Actualizar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+      <!-- Ranking de Donaciones -->
+      <section class="mt-8">
+        <h2 class="text-center text-2xl font-bold">Top Ranke Donacion</h2>
+        <div class="flex justify-center space-x-4 mt-4">
+          <div class="text-center">
+            <img
+              alt="Icono para Alex"
+              class="rounded-full"
+              height="50"
+              src="https://storage.googleapis.com/a1aa/image/yoP4uar7pjLhA2qz_6krwaygXtzo2QtWtS59ul21uvo.jpg"
+              width="50"
+            />
+            <p>Alex</p>
+          </div>
+          <div class="text-center">
+            <img
+              alt="Icono para Darlin"
+              class="rounded-full"
+              height="50"
+              src="https://storage.googleapis.com/a1aa/image/N2oBv47e7Da7VRtQaRHBGvVJEaG0WH-3V0HNJIZ-Ia8.jpg"
+              width="50"
+            />
+            <p>Darlin</p>
+          </div>
+          <div class="text-center">
+            <img
+              alt="Icono para Jose"
+              class="rounded-full"
+              height="50"
+              src="https://storage.googleapis.com/a1aa/image/AyvkewgY5QWRVUBBr5E0vsahdUdxF-4eWK1iJSkxwfs.jpg"
+              width="50"
+            />
+            <p>Jose</p>
+          </div>
+          <div class="text-center">
+            <img
+              alt="Icono para Miguel"
+              class="rounded-full"
+              height="50"
+              src="https://storage.googleapis.com/a1aa/image/tm617iP3_GW8eQjc0NDbngUe1Is0ZMyzneaIkN5FldE.jpg"
+              width="50"
+            />
+            <p>Miguel</p>
+          </div>
+          <div class="text-center">
+            <img
+              alt="Icono para Eddin"
+              class="rounded-full"
+              height="50"
+              src="https://storage.googleapis.com/a1aa/image/4K6ElVgRVHs19_j0ajl3ceQud6kvzKWyTHOc2Dx3IU4.jpg"
+              width="50"
+            />
+            <p>Eddin</p>
+          </div>
+        </div>
+      </section>
+      <!-- Lista de Mangas/Manhwas -->
+      <section
+        class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+      >
+        <div class="bg-gray-800 p-4 rounded">
+          <img
+            alt="Imagen de portada de Evolución Demoníaca"
+            class="rounded"
+            height="300"
+            src="https://storage.googleapis.com/a1aa/image/FQFq9t2NPq9_2YMgYQr5sAQnoPvaxacjwMdb0MGbvK0.jpg"
+            width="200"
+          />
+          <div class="flex justify-between mt-2">
+            <button class="bg-blue-500 p-2 rounded">Ver</button>
+            <button class="bg-blue-500 p-2 rounded">Leer</button>
+          </div>
+          <p class="text-center mt-2">Evolución Demoníaca</p>
+        </div>
+        <div class="bg-gray-800 p-4 rounded">
+          <img
+            alt="Imagen de portada de Evolución Demoníaca"
+            class="rounded"
+            height="300"
+            src="https://storage.googleapis.com/a1aa/image/FQFq9t2NPq9_2YMgYQr5sAQnoPvaxacjwMdb0MGbvK0.jpg"
+            width="200"
+          />
+          <div class="flex justify-between mt-2">
+            <button class="bg-blue-500 p-2 rounded">Ver</button>
+            <button class="bg-blue-500 p-2 rounded">Leer</button>
+          </div>
+          <p class="text-center mt-2">Evolución Demoníaca</p>
+        </div>
+        <div class="bg-gray-800 p-4 rounded">
+          <img
+            alt="Imagen de portada de Evolución Demoníaca"
+            class="rounded"
+            height="300"
+            src="https://storage.googleapis.com/a1aa/image/FQFq9t2NPq9_2YMgYQr5sAQnoPvaxacjwMdb0MGbvK0.jpg"
+            width="200"
+          />
+          <div class="flex justify-between mt-2">
+            <button class="bg-blue-500 p-2 rounded">Ver</button>
+            <button class="bg-blue-500 p-2 rounded">Leer</button>
+          </div>
+          <p class="text-center mt-2">Evolución Demoníaca</p>
+        </div>
+        <div class="bg-gray-800 p-4 rounded">
+          <img
+            alt="Imagen de portada de Evolución Demoníaca"
+            class="rounded"
+            height="300"
+            src="https://storage.googleapis.com/a1aa/image/FQFq9t2NPq9_2YMgYQr5sAQnoPvaxacjwMdb0MGbvK0.jpg"
+            width="200"
+          />
+          <div class="flex justify-between mt-2">
+            <button class="bg-blue-500 p-2 rounded">Ver</button>
+            <button class="bg-blue-500 p-2 rounded">Leer</button>
+          </div>
+          <p class="text-center mt-2">Evolución Demoníaca</p>
+        </div>
+        <div class="bg-gray-800 p-4 rounded">
+          <img
+            alt="Imagen de portada de Evolución Demoníaca"
+            class="rounded"
+            height="300"
+            src="https://storage.googleapis.com/a1aa/image/FQFq9t2NPq9_2YMgYQr5sAQnoPvaxacjwMdb0MGbvK0.jpg"
+            width="200"
+          />
+          <div class="flex justify-between mt-2">
+            <button class="bg-blue-500 p-2 rounded">Ver</button>
+            <button class="bg-blue-500 p-2 rounded">Leer</button>
+          </div>
+          <p class="text-center mt-2">Evolución Demoníaca</p>
+        </div>
+        <div class="bg-gray-800 p-4 rounded">
+          <img
+            alt="Imagen de portada de Evolución Demoníaca"
+            class="rounded"
+            height="300"
+            src="https://storage.googleapis.com/a1aa/image/FQFq9t2NPq9_2YMgYQr5sAQnoPvaxacjwMdb0MGbvK0.jpg"
+            width="200"
+          />
+          <div class="flex justify-between mt-2">
+            <button class="bg-blue-500 p-2 rounded">Ver</button>
+            <button class="bg-blue-500 p-2 rounded">Leer</button>
+          </div>
+          <p class="text-center mt-2">Evolución Demoníaca</p>
+        </div>
+        <div class="bg-gray-800 p-4 rounded">
+          <img
+            alt="Imagen de portada de Evolución Demoníaca"
+            class="rounded"
+            height="300"
+            src="https://storage.googleapis.com/a1aa/image/FQFq9t2NPq9_2YMgYQr5sAQnoPvaxacjwMdb0MGbvK0.jpg"
+            width="200"
+          />
+          <div class="flex justify-between mt-2">
+            <button class="bg-blue-500 p-2 rounded">Ver</button>
+            <button class="bg-blue-500 p-2 rounded">Leer</button>
+          </div>
+          <p class="text-center mt-2">Evolución Demoníaca</p>
+        </div>
+        <div class="bg-gray-800 p-4 rounded">
+          <img
+            alt="Imagen de portada de Evolución Demoníaca"
+            class="rounded"
+            height="300"
+            src="https://storage.googleapis.com/a1aa/image/FQFq9t2NPq9_2YMgYQr5sAQnoPvaxacjwMdb0MGbvK0.jpg"
+            width="200"
+          />
+          <div class="flex justify-between mt-2">
+            <button class="bg-blue-500 p-2 rounded">Ver</button>
+            <button class="bg-blue-500 p-2 rounded">Leer</button>
+          </div>
+          <p class="text-center mt-2">Evolución Demoníaca</p>
+        </div>
+      </section>
+      <!-- Noticias y Novedades -->
+      <section class="mt-8">
+        <h2 class="text-center text-2xl font-bold">Noticias y novedades</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <div class="bg-gray-800 p-4 rounded">
+            <img
+              alt="Imagen de noticia con un personaje y texto 'El Príncipe Perezoso se convierte en un Genio'"
+              class="rounded"
+              height="200"
+              src="https://storage.googleapis.com/a1aa/image/MZ2QyEIpS46e0jjgGIT4PaYLtMtA6QH_SBUaLwDcgb0.jpg"
+              width="400"
+            />
+            <p class="mt-2">ruru maestra del espadachin</p>
+          </div>
+          <div class="bg-gray-800 p-4 rounded">
+            <img
+              alt="Imagen de noticia con un personaje y texto 'Jugador que regresó 10,000 años después'"
+              class="rounded"
+              height="200"
+              src="https://storage.googleapis.com/a1aa/image/yTsmBcrsafWxY4tDOlz0TS6KjIlaSw8rmoyeUG4jN6Q.jpg"
+              width="400"
+            />
+            <p class="mt-2">Jugador que regresó 10,000 años después</p>
+          </div>
+          <div class="bg-gray-800 p-4 rounded">
+            <img
+              alt="Imagen de noticia con un personaje y texto 'El hijo menor del maestro de la espada'"
+              class="rounded"
+              height="200"
+              src="https://storage.googleapis.com/a1aa/image/obg1OqlDkQogoZvpUwbXfNvmtqD6oy-cuhpxZnouRZE.jpg"
+              width="400"
+            />
+            <p class="mt-2">El hijo menor del maestro de la espada</p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Pie de Página (Footer) -->
+    <footer class="bg-gray-800 p-4 mt-8">
+      <div class="flex justify-center space-x-4">
+        <a class="text-white" href="#">
+          <i class="fab fa-facebook"> </i>
+        </a>
+        <a class="text-white" href="#">
+          <i class="fab fa-youtube"> </i>
+        </a>
+        <a class="text-white" href="#">
+          <i class="fab fa-twitter"> </i>
+        </a>
+        <a class="text-white" href="#">
+          <i class="fab fa-linkedin"> </i>
+        </a>
+      </div>
+    </footer>
+
+    <!-- Modal -->
+    <div
+      id="modal"
+      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden"
+    >
+    
+
+
+        <div class="mt-4 flex justify-end">
+          <button
+            class="bg-red-500 px-4 py-2 rounded hover:bg-red-700"
+            onclick="closeModal()"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="script.js" type="module"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
