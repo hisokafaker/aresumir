@@ -184,6 +184,8 @@ document.getElementById("updateForm").addEventListener("submit", async (e) => {
 
 
 document.addEventListener("DOMContentLoaded", async () => {
+
+  
   try {
       const { data, error } = await supabase
           .from("nuevo")  // Nombre de la tabla
@@ -220,4 +222,86 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (error) {
       console.error("Error al cargar los datos:", error.message);
   }
+});
+
+window.onload = () => {
+  const usuario = JSON.parse(localStorage.getItem("sesionUsuario"));
+
+  if (!usuario) {
+      // Si no hay usuario logueado, ocultar los elementos con id="administrador"
+      document.querySelectorAll("#administrador").forEach(el => el.style.display = "none");
+  }
+  else if(usuario){
+    cambiarBotonLogin(usuario.admin);
+
+      // Ocultar el formulario si el usuario no es admin
+      if (!usuario.admin || usuario.admin === null) {
+          document.getElementById("administrador").style.display = "none";
+      }
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const usuario = JSON.parse(localStorage.getItem("sesionUsuario"));
+  const loginBtn = document.getElementById("login");
+  const perfilMenu = document.getElementById("perfilMenu");
+  
+  if (usuario) {
+      // Oculta el botón de login y muestra el menú de perfil
+      loginBtn.style.display = "none";
+      perfilMenu.style.display = "block";
+  } else {
+      // Si no hay sesión, muestra el botón de login
+      loginBtn.style.display = "block";
+      perfilMenu.style.display = "none";
+  }
+});
+
+// Evento para iniciar sesión
+document.getElementById("iniciar").addEventListener("click", async () => {
+  const correo = document.getElementById("correo").value.trim();
+  const pass = document.getElementById("pass").value.trim();
+
+  if (!correo || !pass) {
+      alert("Por favor, completa todos los campos.");
+      return;
+  }
+
+  try {
+      const { data, error } = await supabase
+          .from("usuarios")
+          .select("*")
+          .eq("correo", correo)
+          .eq("pass", pass)
+          .single();
+
+      if (error || !data) {
+          alert("Correo o contraseña incorrectos.");
+          return;
+      }
+
+      alert("Inicio de sesión exitoso.");
+      console.log("Usuario autenticado:", data);
+
+      // Guarda sesión en localStorage
+      localStorage.setItem("sesionUsuario", JSON.stringify(data));
+
+      // Oculta el botón de login y muestra el menú de perfil
+      document.getElementById("login").style.display = "none";
+      document.getElementById("perfilMenu").style.display = "block";
+
+  } catch (error) {
+      console.error("Error al iniciar sesión:", error.message);
+      alert("Error: " + error.message);
+  }
+});
+
+// Evento para cerrar sesión
+document.getElementById("cerrarSesion").addEventListener("click", () => {
+  localStorage.removeItem("sesionUsuario");
+  alert("Sesión cerrada.");
+
+  // Muestra el botón de login y oculta el menú de perfil
+  document.getElementById("login").style.display = "block";
+  document.getElementById("perfilMenu").style.display = "none";
 });
