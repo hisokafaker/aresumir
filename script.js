@@ -57,6 +57,9 @@ document.getElementById("iniciar").addEventListener("click", async () => {
           return;
       }
 
+       // Guarda sesión en localStorage
+       localStorage.setItem("sesionUsuario", JSON.stringify(data));
+
       alert("Inicio de sesión exitoso.");
       console.log("Usuario autenticado:", data);
 
@@ -76,6 +79,46 @@ document.getElementById("iniciar").addEventListener("click", async () => {
   }
 });
 
+/*
+// Evento para iniciar sesión
+document.getElementById("iniciar").addEventListener("click", async () => {
+  const correo = document.getElementById("correo").value.trim();
+  const pass = document.getElementById("pass").value.trim();
+
+  if (!correo || !pass) {
+      alert("Por favor, completa todos los campos.");
+      return;
+  }
+
+  try {
+      const { data, error } = await supabase
+          .from("usuarios")
+          .select("*")
+          .eq("correo", correo)
+          .eq("pass", pass)
+          .single();
+
+      if (error || !data) {
+          alert("Correo o contraseña incorrectos.");
+          return;
+      }
+
+      alert("Inicio de sesión exitoso.");
+      console.log("Usuario autenticado:", data);
+
+      // Guarda sesión en localStorage
+      localStorage.setItem("sesionUsuario", JSON.stringify(data));
+
+      // Oculta el botón de login y muestra el menú de perfil
+      document.getElementById("login").style.display = "none";
+      document.getElementById("perfilMenu").style.display = "block";
+
+  } catch (error) {
+      console.error("Error al iniciar sesión:", error.message);
+      alert("Error: " + error.message);
+  }
+});
+*/
 // Función para cambiar el botón de login
 function cambiarBotonLogin(admin) {
   const loginButton = document.getElementById("login-container"); // Contenedor del botón
@@ -241,6 +284,7 @@ window.onload = () => {
   }
 }
 
+/*
 document.addEventListener("DOMContentLoaded", () => {
   const usuario = JSON.parse(localStorage.getItem("sesionUsuario"));
   const loginBtn = document.getElementById("login");
@@ -257,44 +301,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Evento para iniciar sesión
-document.getElementById("iniciar").addEventListener("click", async () => {
-  const correo = document.getElementById("correo").value.trim();
-  const pass = document.getElementById("pass").value.trim();
+*/
 
-  if (!correo || !pass) {
-      alert("Por favor, completa todos los campos.");
-      return;
-  }
 
-  try {
-      const { data, error } = await supabase
-          .from("usuarios")
-          .select("*")
-          .eq("correo", correo)
-          .eq("pass", pass)
-          .single();
-
-      if (error || !data) {
-          alert("Correo o contraseña incorrectos.");
-          return;
-      }
-
-      alert("Inicio de sesión exitoso.");
-      console.log("Usuario autenticado:", data);
-
-      // Guarda sesión en localStorage
-      localStorage.setItem("sesionUsuario", JSON.stringify(data));
-
-      // Oculta el botón de login y muestra el menú de perfil
-      document.getElementById("login").style.display = "none";
-      document.getElementById("perfilMenu").style.display = "block";
-
-  } catch (error) {
-      console.error("Error al iniciar sesión:", error.message);
-      alert("Error: " + error.message);
-  }
-});
 
 // Evento para cerrar sesión
 document.getElementById("cerrarSesion").addEventListener("click", () => {
